@@ -21,7 +21,7 @@
         <!-- NIP -->
         <div class="form-group">
             <label for="nip">NIP</label>
-            <input type="text" id="nip" name="nip" class="form-control" value="{{ $dosen->nip }}" disabled>
+            <input type="text" id="nip" name="nip" class="form-control" value="{{ $dosen->nip }}" readonly>
         </div>
 
         <!-- Nama -->
@@ -34,7 +34,7 @@
         <div class="form-group">
             <label for="kode_dosen">Kode Dosen</label>
             <input type="text" id="kode_dosen" name="kode_dosen" class="form-control" value="{{ $dosen->kode_dosen }}"
-                disabled>
+                readonly>
         </div>
         <button type="submit" class="btn btn-primary">Update</button>
     </form>

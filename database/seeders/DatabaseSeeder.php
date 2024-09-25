@@ -42,9 +42,25 @@ class DatabaseSeeder extends Seeder
             'password' => Hash::make('password'),
             'role' => 'mahasiswa',
         ]);
+        Kelas::create([
+            'name' => 'Kelas A',
+            'jumlah' =>'10' ,]);
+        Kelas::create([
+            'name' => 'Kelas B',
+            'jumlah' => '12',]);
+        Kelas::create([
+            'name' => 'Kelas C',
+            'jumlah' => '21',]);
+        Kelas::create([ 
+            'name' => 'Kelas D',
+            'jumlah' => '6',]);
+        Kelas::create([
+            'name' => 'Kelas E',
+            'jumlah' => '14',]);
+
          \App\Models\User::factory(7)->create();
          \App\Models\Kaprodi::factory(1)->create();
-         \App\Models\Dosen::factory(5)->create();
-         \App\Models\Mahasiswa::factory(20)->create();
+         \App\Models\Dosen::factory(5)->recycle(Kelas::all())->create();
+         \App\Models\Mahasiswa::factory(100)->recycle(Kelas::all())->create();
     }
 }

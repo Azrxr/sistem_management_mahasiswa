@@ -53,6 +53,11 @@ Route::controller(Kaprodi::class)->group(function () {
     Route::get('/kaprodi/kelas/{kelas}/edit', 'editKelas')->name('kaprodi.kelas.edit'); // Form untuk edit kelas
     Route::put('/kaprodi/kelas/{kelas}', 'updateKelas')->name('kaprodi.kelas.update'); // Update data kelas
     Route::delete('/kaprodi/kelas/{kelas}', 'destroyKelas')->name('kaprodi.kelas.destroy'); // Hapus kelas
+
+    //plotting kelas
+    Route::get('/kaprodi/kelas/{kelas}/', 'showkelas')->name('kaprodi.kelas.read'); // Plotting kelas
+    Route::post('/kaprodi/kelas/{kelas}/plot-mahasiswa', 'plotMahasiswaKelas')->name('kaprodi.kelas.plotmahasiswa'); // Plotting mahasiswa
+    Route::post('/kaprodi/kelas/{kelas}/plot-dosen', 'plotDosenKelas')->name('kaprodi.kelas.plotdosen'); // Plotting dosen
 });
 
 Route::controller(Dosen::class)->group(function () {

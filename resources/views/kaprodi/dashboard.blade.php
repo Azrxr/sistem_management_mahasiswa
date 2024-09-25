@@ -50,6 +50,7 @@
         <h4>Daftar kelas</h4>
         <a href="{{ route('kaprodi.kelas.create') }}" class="btn btn-primary">Tambah Kelas
         </a>
+        {{-- <a href="{{ route('kaprodi.kelas.plotkelas') }}">Plotting Kelas</a> --}}
         <table class="table table-striped table-bordered">
             <thead class="thead-dark">
                 <tr>
@@ -61,7 +62,11 @@
             <tbody>
                 @foreach ($kelas as $kelas)
                     <tr>
-                        <td>{{ $kelas->name }}</td>
+                        <td>
+                            <a href="{{ route('kaprodi.kelas.read', $kelas->id) }}">
+                                {{ $kelas->name }}
+                            </a>
+                        </td>
                         <td>{{ $kelas->jumlah }}</td>
                         <td>
                             <a href="{{ route('kaprodi.kelas.edit', $kelas->id) }}"
@@ -73,6 +78,7 @@
                                 <button type="submit" class="btn btn-danger btn-sm"
                                     onclick="return confirm('Are you sure?')">Delete</button>
                             </form>
+
                         </td>
                     </tr>
                 @endforeach
@@ -96,7 +102,7 @@
                         <td>{{ $mahasiswa->name }}</td>
                         <td>{{ $mahasiswa->tempat_lahir }}, {{ $mahasiswa->tanggal_lahir }}</td>
                         <td>{{ $mahasiswa->kelas->name }}</td>
-                        
+
                     </tr>
                 @endforeach
             </tbody>

@@ -81,6 +81,17 @@ class Kaprodi extends Controller
         return redirect()->route('kaprodi.dashboard')->with('success', 'Dosen berhasil dihapus.');
     }
 
+    public function showkelas($kelas_id)
+    {
+        $kelas = Kelas::with('dosens', 'mahasiswas')->findOrFail($kelas_id);
+
+        $assignedMahasiswaIds = $kelas->mahasiswas->pluck('id')->toArray();
+        $assignedDosenIds = $kelas->dosens->pluck('id')->toArray();
+        $availableMahasiswas = Mahasiswa::whereNotIn('id', $assignedMahasiswaIds)->get();
+        $availableDosens = Dosen::whereNotIn('id', $assignedDosenIds)->get();
+        return view('kaprodi.kelas.read', compact('kelas', 'availableMahasiswas', 'availableDosens'));
+    }
+
 
     public function createKelas()
     {
@@ -110,12 +121,38 @@ class Kaprodi extends Controller
         ]);
 
         $kelas->update($request->all());
-
+        $kelas->updateJumlah();
         return redirect()->route('kaprodi.dashboard')->with('success', 'Data kelas berhasil diperbarui.');
     }
     public function destroyKelas(Kelas $kelas)
     {
         $kelas->delete();
         return redirect()->route('kaprodi.dashboard')->with('success', 'Kelas berhasil dihapus.');
+    }
+
+    public function plotMahasiswaKelas(Request $req, $kelas_id)
+    {
+        $req->validate([
+            'mahasiswa_id' => 'required|exists:mahasiswas,id',
+        ]);
+        $mahasiswa = Mahasiswa::findOrFail($req->mahasiswa_id);
+        $mahasiswa->kelas_id = $kelas_id;
+        $mahasiswa->save();
+        $kelas = Kelas::findOrFail($kelas_id);
+        $kelas->updateJumlah();
+
+        return redirect()->route('kaprodi.kelas.read', $kelas_id)->with('success', 'Mahasiswa berhasil ditambahkan ke kelas.');
+    }
+    public function plotDosenKelas(Request $req, $kelas_id)
+    {
+        $req->validate([
+            'dosen_id' => 'required|exists:dosens,id',
+        ]);
+        $dosen = Dosen::findOrFail($req->dosen_id);
+        $dosen->kelas_id = $kelas_id;
+        $dosen->save();
+        $kelas = Kelas::findOrFail($kelas_id);
+        $kelas->updateJumlah();
+        return redirect()->route('kaprodi.kelas.read', $kelas_id)->with('success', 'Dosen berhasil ditambahkan ke kelas.');
     }
 }

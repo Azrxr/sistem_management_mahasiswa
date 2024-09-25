@@ -43,7 +43,7 @@
         <div class="mb-4">
             <label for="keterangan" class="block text-sm font-medium text-gray-700">Keterangan</label>
             <input type="text" name="keterangan" id="keterangan"
-                class="mt-4 p-4 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" placeholder="silahkan di jelaskan">
+                class="mt-4 p-4 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" placeholder="silahkan di jelaskan" required>
         </div>
        
         <button type="submit"

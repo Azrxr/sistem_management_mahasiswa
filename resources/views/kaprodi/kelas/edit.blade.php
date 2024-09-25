@@ -11,7 +11,7 @@
         </div>
         <div class="form-group">
             <label for="jumlah">Jumlah Mahasiswa</label>
-            <input type="number" value="{{ $kelas->jumlah }}" id="jumlah" name="jumlah" class="form-control" required>
+            <input  type="number" value="{{ $kelas->jumlah }}" id="jumlah" name="jumlah" class="form-control" readonly>
         </div>
         <button type="submit" class="btn btn-primary">Update</button>
     </form>
