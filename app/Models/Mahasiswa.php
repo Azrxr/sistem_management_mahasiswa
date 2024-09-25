@@ -17,7 +17,7 @@ class Mahasiswa extends Model
         'wali_kelas_id',
         'tempat_lahir',
         'tanggal_lahir',
-        
+
     ];
 
     public function index()
@@ -35,9 +35,13 @@ class Mahasiswa extends Model
     {
         return $this->belongsTo(Kelas::class, 'kelas_id');
     }
-    
+
     public function waliKelas()
-{
-    return $this->belongsTo(Dosen::class, 'wali_kelas_id');
-}
+    {
+        return $this->belongsTo(Dosen::class, 'wali_kelas_id');
+    }
+    public function requests()
+    {
+        return $this->hasMany(RequestMahasiswa::class);
+    }
 }

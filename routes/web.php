@@ -64,4 +64,9 @@ Route::controller(Dosen::class)->group(function () {
     Route::delete('/dosen/mahasiswas/{mahasiswa}', 'destroyMahasiswa')->name('dosen.mahasiswas.destroy'); // Hapus mahasiswa
 });
 
+Route::controller(MahasiswaCtr::class)->group(function () {
+    Route::get('/mahasiswa/profile', 'profile')->name('mahasiswa.profile');
+    Route::Post('/mahasiswa/profile/', 'submitrequest')->name('mahasiswa.profile');
+});
+
 

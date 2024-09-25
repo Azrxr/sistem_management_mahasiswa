@@ -59,6 +59,9 @@ class Dosen extends Controller
     {
         $user = User::all();
         $kelas = Kelas::all();
+        if ($mahasiswa->wali_kelas_id != Auth::user()->id) {
+            return redirect()->route('dosen.dashboard')->with('error', 'Anda bukan wali kelas dari mahasiswa ini');
+        }
         return view('dosen.mahasiswas.edit', compact('mahasiswa', 'user', 'kelas'));
     }
 
