@@ -14,5 +14,13 @@ class RequestMahasiswa extends Model
         'mahasiswa_id', 
         'keterangan'
     ];
-    
+    public function mahasiswa()
+    {
+        return $this->belongsTo(Mahasiswa::class);
+    }
+
+    public function kelas()
+    {
+        return $this->belongsTo(Kelas::class);
+    }
 }

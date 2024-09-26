@@ -32,7 +32,13 @@
                         <a href="{{ route('mahasiswa.profile') }}" class="block">Profil Saya</a>
                     </li>
                     <li class="px-6 py-2 hover:bg-gray-700">
-                        <a href="#" class="block">Keluar</a>
+                        <a href="{{ route('logout') }}" class="block"
+                           onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                           Keluar
+                        </a>
+                        <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                            @csrf
+                        </form>
                     </li>
                 </ul>
             </nav>
@@ -47,7 +53,12 @@
                     <h2 class="text-3xl font-semibold">Profil Mahasiswa</h2>
                 </div>
                 <div>
-                    <span class="text-gray-600">Welcome, {{ $user->username }}</span>
+                    @guest
+                        <a href="{{ route('login') }}" class="text-gray-600">Login</a>
+                        <a href="{{ route('register') }}" class="text-gray-600 ml-4">Register</a>
+                    @else
+                        <span class="text-gray-600">Welcome, {{ Auth::user()->name }}</span>
+                    @endguest
                 </div>
             </header>
 

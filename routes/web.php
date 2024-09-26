@@ -67,11 +67,15 @@ Route::controller(Dosen::class)->group(function () {
     Route::get('/dosen/mahasiswas/{mahasiswa}/edit', 'editMahasiswa')->name('dosen.mahasiswas.edit'); // Form untuk edit mahasiswa
     Route::put('/dosen/mahasiswas/{mahasiswa}', 'updateMahasiswa')->name('dosen.mahasiswas.update'); // Update data mahasiswa
     Route::delete('/dosen/mahasiswas/{mahasiswa}', 'destroyMahasiswa')->name('dosen.mahasiswas.destroy'); // Hapus mahasiswa
+    Route::post('/dosen/approveRequest/{id}', 'approveRequest')->name('dosen.approveRequest');
 });
 
 Route::controller(MahasiswaCtr::class)->group(function () {
     Route::get('/mahasiswa/profile', 'profile')->name('mahasiswa.profile');
-    Route::Post('/mahasiswa/profile/', 'submitrequest')->name('mahasiswa.profile');
+    Route::post('/mahasiswa/requestEdit', 'submitRequest')->name('mahasiswa.requestEdit');
+    Route::get('/mahasiswa/edit', 'edit')->name('mahasiswa.edit');
+    Route::post('/mahasiswa/updateProfile', 'updateProfile')->name('mahasiswa.updateProfile');
 });
+
 
 

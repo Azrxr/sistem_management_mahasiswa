@@ -2,12 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Kelas;
 use App\Models\User;
+use App\Models\Kelas;
 use App\Models\Mahasiswa;
+use Illuminate\Http\Request;
+use App\Models\RequestMahasiswa;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Http\Request;
 
 class Dosen extends Controller
 {
@@ -20,7 +21,8 @@ class Dosen extends Controller
     {
         $user = Auth::user();
         $mahasiswas = Mahasiswa::all();
-        return view('dosen.dashboard', compact('mahasiswas', 'user'));
+        $requests = RequestMahasiswa::with('mahasiswa')->get();
+        return view('dosen.dashboard', compact('mahasiswas', 'user', 'requests'));
     }
 
     public function createMahasiswa()
@@ -82,23 +84,24 @@ class Dosen extends Controller
         $mahasiswa->delete();
         return redirect()->route('dosen.dashboard')->with('success', 'Mahasiswa berhasil dihapus');
     }
+    public function approveRequest($id)
+    {
+        // Method untuk dosen menyetujui request
+        $request = RequestMahasiswa::find($id);
+        if (!$request) {
+            return redirect()->route('dosen.dashboard')->with('error', 'Request tidak ditemukan.');
+        }
+        $mahasiswa = Mahasiswa::find($request->mahasiswa_id);
+        if ($mahasiswa->wali_kelas_id != Auth::user()->id) {
+            return redirect()->route('dosen.dashboard')->with('error', 'Anda bukan wali kelas dari mahasiswa ini');
+        }
+        // Set field edit jadi true
+        $mahasiswa->edit = true;
+        $mahasiswa->save();
 
-    // public function approveRequest($requestId)
-    // {
-    //     $request = RequestDataEdit::find($requestId);
-    //     // Update data mahasiswa
-    //     $mahasiswa = $request->mahasiswa;
-    //     $mahasiswa->update($request->requested_data);
+        // Hapus request setelah di-approve
+        $request->delete();
 
-    //     // Hapus request setelah di-approve
-    //     $request->delete();
-    //     return redirect()->back()->with('success', 'Request di-approve dan data mahasiswa diupdate');
-    // }
-    // public function declineRequest($requestId)
-    // {
-    //     // Hapus request tanpa mengubah data
-    //     RequestDataEdit::find($requestId)->delete();
-
-    //     return redirect()->back()->with('success', 'Request ditolak');
-    // }
+        return redirect()->route('dosen.dashboard')->with('success', 'Request edit disetujui.');
+    }
 }

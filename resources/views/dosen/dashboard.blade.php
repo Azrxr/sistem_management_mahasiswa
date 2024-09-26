@@ -14,18 +14,40 @@
 
     <body>
         <h2>Dashboard dosen</h2>
-        {{-- 
-    @foreach ($requests as $request)
-<tr>
-    <td>{{ $request->mahasiswa->name }}</td>
-    <td>{{ $request->requested_data }}</td>
-    <td>
-        <a href="{{ route('dosen.approve', $request->id) }}" class="btn btn-success">Approve</a>
-        <a href="{{ route('dosen.decline', $request->id) }}" class="btn btn-danger">Decline</a>
-    </td>
-</tr>
-@endforeach --}}
-
+        @if(session('success'))
+            <div class="bg-green-500 text-white p-2 rounded">
+                {{ session('success') }}
+            </div>
+        @endif
+        
+        @if(session('error'))
+            <div class="bg-red-500 text-white p-2 rounded">
+                {{ session('error') }}
+            </div>
+        @endif
+        
+        <div class="bg-white p-6 mt-4 shadow-sm rounded-lg">
+            <h3 class="text-xl font-semibold mb-4">Requests from Mahasiswa</h3>
+        
+            @if ($requests->count())
+                <ul>
+                    @foreach ($requests as $request)
+                        <li class="mb-4">
+                            Mahasiswa: {{ $request->mahasiswa->name }} - {{ $request->keterangan }}
+                            <form action="{{ route('dosen.approveRequest', $request->id) }}" method="POST" class="inline-block ml-4">
+                                @csrf
+                                <button type="submit" class="bg-green-500 hover:bg-green-700 text-white font-bold py-1 px-3 rounded">
+                                    Approve
+                                </button>
+                            </form>
+                        </li>
+                    @endforeach
+                </ul>
+            @else
+                <p>Tidak ada request.</p>
+            @endif
+        </div>
+        
 
         <h4>Daftar Mahasiswa</h4>
         <a href="{{ route('dosen.mahasiswas.create') }}"class="btn btn-primary">Tambah Mahasiswa
