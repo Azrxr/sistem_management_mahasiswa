@@ -1,115 +1,125 @@
-@extends('layouts.app')
-
-@section('content')
-    <!DOCTYPE html>
-    <html lang="en">
-
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>kaprodi</title>
-    </head>
-
+<x-layout>
     <body>
-        <h1>Dashboard Kaprodi</h1>
+        <div class="-mt-20">
+            <div class="flex items-center justify-between  py-4 border-b lg:py-6 dark:border-primary-darker">
+                <h1 class="text-2xl font-semibold">Dashboard</h1>
+                
+            </div>
 
-        <h4>Daftar Dosen</h4>
-        <a href="{{ route('kaprodi.dosens.create') }}" class="btn btn-primary">Tambah Dosen
-        </a>
-        <table class="table table-striped table-bordered">
-            <thead class="thead-dark">
-                <tr>
-                    <th scope="col">Nama</th>
-                    <th scope="col">NIP</th>
-                    <th scope="col">Kode Dosen</th>
-                    <th scope="col">Action</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach ($dosens as $dosen)
-                    <tr>
-                        <td>{{ $dosen->name }}</td>
-                        <td>{{ $dosen->nip }}</td>
-                        <td>{{ $dosen->kode_dosen }}</td>
-                        <td>
-                            <a href="{{ route('kaprodi.dosens.edit', $dosen->id) }}"
-                                class="btn btn-warning btn-sm">Update</a>
-                            <form action="{{ route('kaprodi.dosens.destroy', $dosen->id) }}" method="POST"
-                                class="d-inline">
-                                @csrf
-                                @method('DELETE')
-                                <button type="submit" class="btn btn-danger btn-sm"
-                                    onclick="return confirm('Are you sure?')">Delete</button>
-                            </form>
-                        </td>
-                    </tr>
-                @endforeach
-            </tbody>
-        </table>
+            <div class="my-10">
+                <div class="flex items-center justify-between py-4 border-b lg:py-6 dark:border-primary-darker">
+                    <h1 class="text-2xl font-semibold">Daftar Dosen</h1>
+                    <a href="{{ route('kaprodi.dosens.create') }}" target="_blank"
+                        class="px-4 py-2 text-sm text-white rounded-md bg-primary hover:bg-primary-dark focus:outline-none focus:ring focus:ring-primary focus:ring-offset-1 focus:ring-offset-white dark:focus:ring-offset-dark">
+                        Tambah Dosen
+                    </a>
+                </div>
+                
+                <table class="min-w-full mt-4  rounded-xl shadow-md">
+                    <thead class=" dark:border-primary-darker uppercase text-sm leading-normal">
+                        <tr>
+                            <th class="py-3 px-6 text-left">Nama</th>
+                            <th class="py-3 px-6 text-left">NIP</th>
+                            <th class="py-3 px-6 text-left">Kode Dosen</th>
+                            <th class="py-3 px-6 text-left">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody class=" text-sm font-light">
+                        @foreach ($dosens as $dosen)
+                            <tr class="border-b border-primary-dark hover:bg-primary-dark">
+                                <td class="py-3 px-6">{{ $dosen->name }}</td>
+                                <td class="py-3 px-6">{{ $dosen->nip }}</td>
+                                <td class="py-3 px-6">{{ $dosen->kode_dosen }}</td>
+                                <td class="py-3 px-6">
+                                    <a href="{{ route('kaprodi.dosens.edit', $dosen->id) }}"
+                                        class="text-yellow-500 hover:text-yellow-700">Update</a>
+                                    <form action="{{ route('kaprodi.dosens.destroy', $dosen->id) }}" method="POST" class="inline">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit" class="text-red-500 hover:text-red-700 ml-2" onclick="return confirm('Are you sure?')">Delete</button>
+                                    </form>
+                                </td>
+                            </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+            </div>
+            
+            <div class="mb-10">
+                <div class="my-10">
+                    <div class="flex items-center justify-between py-4 border-b lg:py-6 dark:border-primary-darker">
+                        <h1 class="text-2xl font-semibold">Daftar kelas</h1>
+                        <a href="{{ route('kaprodi.kelas.create') }}" target="_blank"
+                            class="px-4 py-2 text-sm text-white rounded-md bg-primary hover:bg-primary-dark focus:outline-none focus:ring focus:ring-primary focus:ring-offset-1 focus:ring-offset-white dark:focus:ring-offset-dark">
+                            Tambah kelas
+                        </a>
+                    </div>
+                <table class="table table-striped table-bordered">
+                    <thead class="dark:border-primary-darker uppercase text-sm leading-normal">
+                        <tr>
+                            <th class="py-3 px-6 text-left">Kelas</th>
+                            <th class="py-3 px-6 text-left">Jumlah</th>
+                            <th class="py-3 px-6 text-left">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody class=" text-sm font-light">
+                        @foreach ($kelas as $kelas)
+                            <tr class="border-b class=border-b border-primary-dark hover:bg-primary-dark">
+                                <td class="py-3 px-6">
+                                    <a href="{{ route('kaprodi.kelas.read', $kelas->id) }}">
+                                        {{ $kelas->name }}
+                                    </a>
+                                </td>
+                                <td class="py-3 px-6">{{ $kelas->jumlah }}</td>
+                                <td class="py-3 px-6">
+                                    <a href="{{ route('kaprodi.kelas.edit', $kelas->id) }}"
+                                        class="text-yellow-500 hover:text-yellow-700">Update</a>
+                                    <form action="{{ route('kaprodi.kelas.destroy', $kelas->id) }}" method="POST"
+                                        class="d-inline">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit" class="text-red-500 hover:text-red-700 ml-2" onclick="return confirm('Are you sure?')">Delete</button>
+                                    </form>
 
-        <h4>Daftar kelas</h4>
-        <a href="{{ route('kaprodi.kelas.create') }}" class="btn btn-primary">Tambah Kelas
-        </a>
-        {{-- <a href="{{ route('kaprodi.kelas.plotkelas') }}">Plotting Kelas</a> --}}
-        <table class="table table-striped table-bordered">
-            <thead class="thead-dark">
-                <tr>
-                    <th scope="col">Kelas</th>
-                    <th scope="col">Jumlah</th>
-                    <th scope="col">Action</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach ($kelas as $kelas)
-                    <tr>
-                        <td>
-                            <a href="{{ route('kaprodi.kelas.read', $kelas->id) }}">
-                                {{ $kelas->name }}
-                            </a>
-                        </td>
-                        <td>{{ $kelas->jumlah }}</td>
-                        <td>
-                            <a href="{{ route('kaprodi.kelas.edit', $kelas->id) }}"
-                                class="btn btn-warning btn-sm">Update</a>
-                            <form action="{{ route('kaprodi.kelas.destroy', $kelas->id) }}" method="POST"
-                                class="d-inline">
-                                @csrf
-                                @method('DELETE')
-                                <button type="submit" class="btn btn-danger btn-sm"
-                                    onclick="return confirm('Are you sure?')">Delete</button>
-                            </form>
+                                </td>
+                            </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+            </div>
+            <div class="mb-10">
+                <div class="my-10">
+                    <div class="flex items-center justify-between py-4 border-b lg:py-6 dark:border-primary-darker">
+                        <h1 class="text-2xl font-semibold">Daftar Mahasiswa</h1>
+                        <a href="{{ route('kaprodi.kelas.create') }}" target="_blank"
+                            class="px-4 py-2 text-sm text-white rounded-md bg-primary hover:bg-primary-dark focus:outline-none focus:ring focus:ring-primary focus:ring-offset-1 focus:ring-offset-white dark:focus:ring-offset-dark">
+                            Tambah Mahasiswa
+                        </a>
+                    </div>
+                    <table class="min-w-full mt-4  rounded-xl shadow-md">
+                        <thead class=" dark:border-primary-darker uppercase text-sm leading-normal">
+                            
+                            <th class="py-3 px-6 text-left">Nim</th>
+                            <th class="py-3 px-6 text-left">Nama</th>
+                            <th class="py-3 px-6 text-left">Tempat, Tanggal lahir</th>
+                            <th class="py-3 px-6 text-left">Kelas</th>
+                        </tr>
+                    </thead>
+                    <tbody class=" text-sm font-light">
+                        @foreach ($mahasiswas as $mahasiswa)
+                            <tr class="border-b border-primary-dark hover:bg-primary-dark">
+                                <td class="py-3 px-6">{{ $mahasiswa->nim }}</td>
+                                <td class="py-3 px-6">{{ $mahasiswa->name }}</td>
+                                <td class="py-3 px-6">{{ $mahasiswa->tempat_lahir }}, {{ $mahasiswa->tanggal_lahir }}</td>
+                                <td class="py-3 px-6">{{ $mahasiswa->kelas->name }}</td>
 
-                        </td>
-                    </tr>
-                @endforeach
-            </tbody>
-        </table>
-
-        <h4>Daftar Mahasiswa</h4>
-        <table class="table table-striped table-bordered">
-            <thead class="thead-dark">
-                <tr>
-                    <th scope="col">Nim</th>
-                    <th scope="col">Nama</th>
-                    <th scope="col">Tempat, Tanggal lahir</th>
-                    <th scope="col">Kelas</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach ($mahasiswas as $mahasiswa)
-                    <tr>
-                        <td>{{ $mahasiswa->nim }}</td>
-                        <td>{{ $mahasiswa->name }}</td>
-                        <td>{{ $mahasiswa->tempat_lahir }}, {{ $mahasiswa->tanggal_lahir }}</td>
-                        <td>{{ $mahasiswa->kelas->name }}</td>
-
-                    </tr>
-                @endforeach
-            </tbody>
-        </table>
-
-
+                            </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+            </div>
+        </div>
     </body>
 
-    </html>
-@endsection
+    {{-- @endsection --}}
+</x-layout>

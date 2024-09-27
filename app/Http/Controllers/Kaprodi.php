@@ -18,8 +18,11 @@ class Kaprodi extends Controller
 
     public function index()
     {
+        $kelas = Kelas::with('dosens', 'mahasiswas')->get();
+        foreach ($kelas as $k) {
+            $k->updateJumlah();
+        }
         $dosens = Dosen::all();
-        $kelas = Kelas::all();
         $mahasiswas = Mahasiswa::all();
         return view('kaprodi.dashboard', compact('dosens', 'kelas', 'mahasiswas'));
     }

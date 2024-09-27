@@ -35,15 +35,6 @@ class Kelas extends Model
     {
         return $this->hasMany(Dosen::class, 'kelas_id');
     }
-    // public function mahasiswas()
-    // {
-    //     return $this->belongsToMany(Mahasiswa::class, 'kelas_mahasiswa', 'kelas_id', 'mahasiswa_id');
-    // }
-
-    // public function dosens()
-    // {
-    //     return $this->belongsToMany(Dosen::class, 'kelas_dosen', 'kelas_id', 'dosen_id');
-    // }
 
 
 }
