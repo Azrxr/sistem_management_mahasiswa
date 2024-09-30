@@ -27,10 +27,6 @@ class Dosen extends Model
     {
         return $this->hasMany(Mahasiswa::class, 'wali_kelas_id');
     }
-    // public function kelas()
-    // {
-    //     return $this->belongsToMany(Kelas::class, 'kelas_dosen', 'dosen_id', 'kelas_id');
-    // }
     public function kelas()
     {
         return $this->belongsTo(Kelas::class, 'kelas_id');
