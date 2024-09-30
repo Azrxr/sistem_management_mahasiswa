@@ -20,13 +20,10 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        
 
-        Kelas::create(['name' => 'Kelas A', 'jumlah' => '0']);
-        Kelas::create(['name' => 'Kelas B', 'jumlah' => '0']);
-        Kelas::create(['name' => 'Kelas C', 'jumlah' => '0']);
-        Kelas::create(['name' => 'Kelas D', 'jumlah' => '0']);
-        Kelas::create(['name' => 'Kelas E', 'jumlah' => '0']);
+
+        $kelasA = Kelas::create(['name' => 'Kelas A', 'jumlah' => '0']);
+        $kelasB = Kelas::create(['name' => 'Kelas B', 'jumlah' => '0']);
 
         $kaprodi = User::create([
             'username' => 'Kaprodi User',
@@ -34,48 +31,76 @@ class DatabaseSeeder extends Seeder
             'password' => Hash::make('password'),
             'role' => 'kaprodi',
         ]);
+        Kaprodi::factory(1)->create(['user_id' => $kaprodi->id]);
 
         // Dosen
+        $dosenW1 = User::create([
+            'username' => 'Dosen wali 1',
+            'email' => 'dosenw1@example.com',
+            'password' => Hash::make('password'),
+            'role' => 'dosen',
+        ]);
+        Dosen::create([
+            'name' => 'Dosen Wali 1',
+            'user_id' => $dosenW1->id,
+            'kode_dosen' => 'DW001',
+            'nip' => '1234567890',
+            'kelas_id' => $kelasA->id
+        ]);
+        $dosenW2 = User::create([
+            'username' => 'Dosen wali 2',
+            'email' => 'dosenw2@example.com',
+            'password' => Hash::make('password'),
+            'role' => 'dosen',
+        ]);
+        Dosen::create(['name' => 'Dosen Wali 2', 'user_id' => $dosenW2->id, 'kode_dosen' => 'DW002', 'nip' => '0987654321', 'kelas_id' => $kelasB->id]);
+
+
         $dosen = User::create([
-            'username' => 'Dosen User',
+            'username' => 'Dosen',
             'email' => 'dosen@example.com',
             'password' => Hash::make('password'),
             'role' => 'dosen',
         ]);
+        Dosen::factory(1)->create(['user_id' => $dosen->id]);
+
+        $dosen2 = User::create([
+            'username' => 'Dosen2',
+            'email' => 'dosen2@example.com',
+            'password' => Hash::make('password'),
+            'role' => 'dosen',
+        ]);
+        Dosen::factory(1)->create(['user_id' => $dosen2->id]);
+
+        $dosen3 = User::create([
+            'username' => 'Dosen3',
+            'email' => 'dosen3@example.com',
+            'password' => Hash::make('password'),
+            'role' => 'dosen',
+        ]);
+        Dosen::factory(1)->create(['user_id' => $dosen3->id]);
+
 
         // Mahasiswa
         $mahasiswa = User::create([
             'username' => 'Mahasiswa User',
             'email' => 'mahasiswa@example.com',
             'password' => Hash::make('password'),
-            'role' => 'mahasiswa',
-        ]);
-        
-        Kelas::create(['name' => 'Kelas A', 'jumlah' => '0']);
-        Kelas::create(['name' => 'Kelas B', 'jumlah' => '0']);
-        Kelas::create(['name' => 'Kelas C', 'jumlah' => '0']);
-        Kelas::create(['name' => 'Kelas D', 'jumlah' => '0']);
-        Kelas::create(['name' => 'Kelas E', 'jumlah' => '0']);
+            'role' => 'mahasiswa'
 
-
-         User::factory(7)->create();
-         Kaprodi::factory(1)->create(['user_id' => $kaprodi->id]);
-         Dosen::create([
-            'name' => 'Dosen User',
-            'user_id' => $dosen->id,
-            'kode_dosen' => 'D001',
-            'nip' => '1234567890',
-            'kelas_id' => 1,
         ]);
-         Dosen::factory(5)->recycle(Kelas::all())->create();
-         Mahasiswa::factory(100)->recycle(Kelas::all())->create();
-         Mahasiswa::create([
+        Mahasiswa::factory(19)
+            ->recycle(Kelas::all())
+            ->recycle([$dosenW1, $dosenW2])
+            ->create();
+        Mahasiswa::create([
             'name' => 'Mahasiswa User',
             'user_id' => $mahasiswa->id,
             'nim' => '1234567890',
             'tempat_lahir' => 'Jakarta',
             'tanggal_lahir' => '2000-01-01',
             'kelas_id' => 1,
+            'wali_kelas_id' => 1,
         ]);
     }
 }

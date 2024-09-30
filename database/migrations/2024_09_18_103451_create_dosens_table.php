@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('dosens', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->unique()->constrained('users')->onDelete('cascade'); // FK to users
-            $table->foreignId('kelas_id')->constrained('kelas')->onDelete('cascade'); // FK to kelas
+            $table->foreignId('kelas_id')->nullable()->constrained('kelas')->onDelete('cascade');
             $table->string('kode_dosen')->unique();
             $table->integer('nip')->unique();
             $table->string('name');

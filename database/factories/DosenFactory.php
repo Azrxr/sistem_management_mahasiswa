@@ -18,7 +18,7 @@ class DosenFactory extends Factory
     {
         return [
             'user_id' => \App\Models\User::factory()->create(['role' => 'dosen'])->id,
-            'kelas_id' => \App\Models\Kelas::factory(),
+            'kelas_id' => null,
             'name'=> fake()->name(),
             'nip' => fake()->unique()->randomNumber(8),
             'kode_dosen' => fake()->unique()->randomNumber(8),
