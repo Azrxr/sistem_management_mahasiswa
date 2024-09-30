@@ -79,8 +79,8 @@
                     @csrf
                     <label for="dosen_id" class="block mb-2">Pilih Dosen</label>
                     <select name="dosen_id" id="dosen_id"
-                        class="border rounded w-1/2 text-white text-sm shadow-sm focus:outline-none focus:ring focus:ring-blue-500">
-                        @foreach ($availableDosens as $dosen)
+                    class="border rounded w-1/2 text-white text-sm bg-primary hover:bg-primary-dark focus:outline-none focus:ring focus:ring-primary focus:ring-offset-1 focus:ring-offset-white dark:focus:ring-offset-dark">
+                    @foreach ($availableDosens as $dosen)
                             <option value="{{ $dosen->id }}">{{ $dosen->name }} kelas asal:
                                 {{ $dosen->kelas->name }} </option>
                         @endforeach

@@ -3,6 +3,7 @@
 use App\Http\Controllers\MahasiswaCtr;
 use App\Http\Controllers\Dosen;
 use App\Http\Controllers\Kaprodi;
+use App\Http\Controllers\SearchCtr;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -68,6 +69,7 @@ Route::controller(Dosen::class)->group(function () {
     Route::put('/dosen/mahasiswas/{mahasiswa}', 'updateMahasiswa')->name('dosen.mahasiswas.update'); // Update data mahasiswa
     Route::delete('/dosen/mahasiswas/{mahasiswa}', 'destroyMahasiswa')->name('dosen.mahasiswas.destroy'); // Hapus mahasiswa
     Route::post('/dosen/approveRequest/{id}', 'approveRequest')->name('dosen.approveRequest');
+    Route::post('/dosen/requests/{id}/reject', 'rejectRequest')->name('dosen.rejectRequest');
 });
 
 Route::controller(MahasiswaCtr::class)->group(function () {
@@ -76,6 +78,7 @@ Route::controller(MahasiswaCtr::class)->group(function () {
     Route::get('/mahasiswa/edit', 'edit')->name('mahasiswa.edit');
     Route::post('/mahasiswa/updateProfile', 'updateProfile')->name('mahasiswa.updateProfile');
 });
+
 
 
 

@@ -25,7 +25,7 @@
             <!-- Brand -->
             <a href="../index.html"
                 class="inline-block mb-6 text-3xl font-bold tracking-wider uppercase text-primary-dark dark:text-light">
-                K-WD
+                login
             </a>
             <main>
                 <div class="w-full max-w-sm px-4 py-6 space-y-6 bg-white rounded-md dark:bg-darker">
@@ -34,7 +34,8 @@
                         @csrf
                         <!-- Email Input -->
                         <input id="email" type="email"
-                            class="w-full px-4 py-2 border rounded-md dark:bg-darker dark:border-gray-700 focus:outline-none focus:ring focus:ring-primary-100 dark:focus:ring-primary-darker @error('email') border-red-500 @enderror"
+                            class="w-full px-4 py-2 border rounded-md dark:bg-darker dark:border-gray-700 focus:outline-none focus:ring focus:ring-primary-100 dark:focus:ring-primary-darker 
+                            @error('email') border-red-500 @enderror"
                             name="email" value="{{ old('email') }}" required autocomplete="email" autofocus
                             placeholder="Email address" />
                         @error('email')

@@ -31,7 +31,7 @@ class Kaprodi extends Controller
     {
         $users = User::all();
         $kelas = Kelas::all();
-        return view('kaprodi.dosens.create', compact('users', 'kelas'));
+        return view('kaprodi.dosens.create', compact('users', 'kelas',));
     }
 
     public function saveDosen(Request $request)

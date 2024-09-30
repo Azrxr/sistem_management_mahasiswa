@@ -1,19 +1,10 @@
-@extends('layouts.app')
-
-@section('content')
-    <!DOCTYPE html>
-    <html lang="en">
-
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <meta http-equiv="X-UA-Compatible" content="ie=edge">
-        <title>dosen
-        </title>
-    </head>
-
+<x-layout title="Dosen">
     <body>
-        <h2>Dashboard dosen</h2>
+        <div class="-mt-20 mx-10">
+            <div class="flex items-center justify-between  py-4 border-b lg:py-6 dark:border-primary-darker">
+                <h1 class="text-2xl font-semibold">Dashboard Dosen</h1>
+                
+            </div>
         @if(session('success'))
             <div class="bg-green-500 text-white p-2 rounded">
                 {{ session('success') }}
@@ -26,68 +17,98 @@
             </div>
         @endif
         
-        <div class="bg-white p-6 mt-4 shadow-sm rounded-lg">
-            <h3 class="text-xl font-semibold mb-4">Requests from Mahasiswa</h3>
+        <div class="space-y-4">
+            <!-- Header -->
+            <div class="flex items-center justify-between py-4 border-b lg:py-6 dark:border-primary-darker">
+                <h1 class="text-2xl font-semibold">Request Akses Edit</h1>
+            </div>
+
+            <div class="p-6 mt-4 shadow-sm rounded-lg dark:border-primary-darker">
+                @if ($requests->count())
+                    <ul>
+                        @foreach ($requests as $request)
+                            <li class="mb-4 dark:border-primary-darker">
+                                <!-- Notification Container -->
+                                <div id="notification-{{ $request->id }}" class="flex items-center justify-between p-4 bg-gray-100 rounded-md shadow-sm dark:bg-gray-800">
+                                    <div class="flex flex-col">
+                                        <span class="font-bold">Mahasiswa: {{ $request->mahasiswa->name }}</span>
+                                        <p class="mt-2 text-sm">{{ $request->keterangan }}</p>
+                                    </div>
+                                    <div class="flex space-x-2">
+                                        <!-- Approve Button -->
+                                        <form action="{{ route('dosen.approveRequest', $request->id) }}" method="POST" class="inline-block">
+                                            @csrf
+                                            <button type="submit" class="bg-green-500 hover:bg-green-700 text-white font-bold py-1 px-3 rounded">
+                                                Approve
+                                            </button>
+                                        </form>
         
-            @if ($requests->count())
-                <ul>
-                    @foreach ($requests as $request)
-                        <li class="mb-4">
-                            Mahasiswa: {{ $request->mahasiswa->name }} - {{ $request->keterangan }}
-                            <form action="{{ route('dosen.approveRequest', $request->id) }}" method="POST" class="inline-block ml-4">
-                                @csrf
-                                <button type="submit" class="bg-green-500 hover:bg-green-700 text-white font-bold py-1 px-3 rounded">
-                                    Approve
-                                </button>
-                            </form>
-                        </li>
-                    @endforeach
-                </ul>
-            @else
-                <p>Tidak ada request.</p>
-            @endif
+                                        <!-- Reject Button -->
+                                        <form action="{{ route('dosen.rejectRequest', $request->id) }}" method="POST" class="inline-block">
+                                            @csrf
+                                            <button type="submit" class="bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-3 rounded">
+                                                Reject
+                                            </button>
+                                        </form>
+        
+                                        <!-- Dismiss Button -->
+                                        <button onclick="document.getElementById('notification-{{ $request->id }}').remove()" class="bg-gray-500 hover:bg-gray-700 text-white font-bold py-1 px-3 rounded">
+                                            Dismiss
+                                        </button>
+                                    </div>
+                                </div>
+                            </li>
+                        @endforeach
+                    </ul>
+                @else
+                    <p>Tidak ada request.</p>
+                @endif
+            </div>
         </div>
         
-
-        <h4>Daftar Mahasiswa</h4>
-        <a href="{{ route('dosen.mahasiswas.create') }}"class="btn btn-primary">Tambah Mahasiswa
-        </a>
-        <table class="table table-striped table-bordered">
-            <thead class="thead-dark">
-                <tr>
-                    <th scope="col">Nim</th>
-                    <th scope="col">Nama</th>
-                    <th scope="col">Tempat, Tanggal lahir</th>
-                    <th scope="col">Kelas</th>
-                    <th scope="col">Action</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach ($mahasiswas as $mahasiswa)
+        <div class="my-10">
+            <div class="flex items-center justify-between py-4 border-b lg:py-6 dark:border-primary-darker">
+                <h1 class="text-2xl font-semibold">Daftar Mahasiswa</h1>
+                <a href="{{ route('dosen.mahasiswas.create') }}" target="_blank"
+                    class="px-4 py-2 text-sm text-white rounded-md bg-primary hover:bg-primary-dark focus:outline-none focus:ring focus:ring-primary focus:ring-offset-1 focus:ring-offset-white dark:focus:ring-offset-dark">
+                    Tambah Mahasiswa
+                </a>
+            </div>
+            
+            <table class="min-w-full mt-4  rounded-xl shadow-md">
+                <thead class=" dark:border-primary-darker uppercase text-sm leading-normal">
                     <tr>
-                        <td>{{ $mahasiswa->nim }}</td>
-                        <td>{{ $mahasiswa->name }}</td>
-                        <td>{{ $mahasiswa->tempat_lahir }}, {{ $mahasiswa->tanggal_lahir }}</td>
-                        <td>{{ $mahasiswa->kelas->name }}</td>
-
-
-                        <td>
-                            <a href="{{ route('dosen.mahasiswas.edit', $mahasiswa->id) }}"
-                                class="btn btn-warning btn-sm">Update</a>
-                            <form action="{{ route('dosen.mahasiswas.destroy', $mahasiswa->id) }}" method="POST"
-                                class="d-inline">
-                                @csrf
-                                @method('DELETE')
-                                <button type="submit" class="btn btn-danger btn-sm"
-                                    onclick="return confirm('Are you sure?')">Delete</button>
-                            </form>
-                        </td>
+                        <th class="py-3 px-6 text-left">Nim</th>
+                        <th class="py-3 px-6 text-left">Nama</th>
+                        <th class="py-3 px-6 text-left">Tempat, Tgl Lahir</th>
+                        <th class="py-3 px-6 text-left">kelas</th>
+                        <th class="py-3 px-6 text-left">Action</th>
                     </tr>
-                @endforeach
-            </tbody>
-        </table>
+                </thead>
+                <tbody class=" text-sm font-light">
+                    @foreach ($mahasiswas as $mahasiswa)
+                        <tr class="border-b border-primary-dark hover:bg-primary-dark">
+                            <td class="py-3 px-6">{{ $mahasiswa->nim }}</td>
+                            <td class="py-3 px-6">{{ $mahasiswa->name }}</td>
+                            <td class="py-3 px-6">{{ $mahasiswa->tempat_lahir }}, {{ $mahasiswa->tanggal_lahir }}</td>
+                            <td class="py-3 px-6">{{ $mahasiswa->kelas->name }}</td>
+
+                            <td class="py-3 px-6">
+                                <a href="{{ route('dosen.mahasiswas.edit', $mahasiswa->id) }}"
+                                    class="text-yellow-500 hover:text-yellow-700">Update</a>
+                                <form action="{{ route('dosen.mahasiswas.destroy', $mahasiswa->id) }}" method="POST" class="inline">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="text-red-500 hover:text-red-700 ml-2" onclick="return confirm('Are you sure?')">Delete</button>
+                                </form>
+                            </td>
+                        </tr>
+                    @endforeach
+                </tbody>
+            </table>
+        </div>
 
     </body>
 
     </html>
-@endsection
+</x-layout>

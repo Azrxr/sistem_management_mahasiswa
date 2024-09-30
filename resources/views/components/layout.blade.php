@@ -1,3 +1,4 @@
+@props(['title', 'notification'])
 <!DOCTYPE html>
 <html lang="en">
 
@@ -6,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     @vite('resources/css/app.css')
-    <title>Mahasiswa</title>
+    <title>{{ $title }}</title>
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@200;300;400;600;700;900&display=swap"
         rel="stylesheet" />
     <link rel="stylesheet" href="/resources/css/app.css" />
@@ -32,132 +33,7 @@
             </div>
 
             <!-- Sidebar -->
-            <aside
-                class="flex-shrink-0 hidden w-64 bg-white border-r dark:border-primary-darker dark:bg-darker md:block">
-                <div class="flex flex-col h-full">
-                    <!-- Sidebar links -->
-                    <nav aria-label="Main" class="flex-1 px-2 py-4 space-y-2 overflow-y-hidden hover:overflow-y-auto">
-                        <!-- Dashboards links -->
-                        <div x-data="{ isActive: false, open: false }">
-                            <!-- active & hover classes 'bg-primary-100 dark:bg-primary' -->
-                            <a href="#" @click="$event.preventDefault(); open = !open"
-                                class="flex items-center p-2 text-gray-500 transition-colors rounded-md dark:text-light hover:bg-primary-100 dark:hover:bg-primary"
-                                :class="{ 'bg-primary-100 dark:bg-primary': isActive || open }" role="button"
-                                aria-haspopup="true" :aria-expanded="(open || isActive) ? 'true' : 'false'">
-                                <span aria-hidden="true">
-                                    <svg class="w-5 h-5" xmlns="http://www.w3.org/2000/svg" fill="none"
-                                        viewBox="0 0 24 24" stroke="currentColor">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                            d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
-                                    </svg>
-                                </span>
-                                <span class="ml-2 text-sm"> Dashboards </span>
-                                <span class="ml-auto" aria-hidden="true">
-                                    <!-- active class 'rotate-180' -->
-                                    <svg class="w-4 h-4 transition-transform transform" :class="{ 'rotate-180': open }"
-                                        xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                                        stroke="currentColor">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                            d="M19 9l-7 7-7-7" />
-                                    </svg>
-                                </span>
-                            </a>
-                            <div role="menu" x-show="open" class="mt-2 space-y-2 px-7" aria-label="Dashboards">
-                                <!-- active & hover classes 'text-gray-700 dark:text-light' -->
-                                <!-- inActive classes 'text-gray-400 dark:text-gray-400' -->
-                                <a href="../index.html" role="menuitem"
-                                    class="block p-2 text-sm text-gray-400 transition-colors duration-200 rounded-md dark:text-gray-400 dark:hover:text-light hover:text-gray-700">
-                                    Default
-                                </a>
-                                <a href="#" role="menuitem"
-                                    class="block p-2 text-sm text-gray-400 transition-colors duration-200 rounded-md dark:hover:text-light hover:text-gray-700">
-                                    Project Mangement (soon)
-                                </a>
-                                <a href="#" role="menuitem"
-                                    class="block p-2 text-sm text-gray-400 transition-colors duration-200 rounded-md dark:hover:text-light hover:text-gray-700">
-                                    E-Commerce (soon)
-                                </a>
-                            </div>
-                        </div>
-
-                        <!-- Authentication links -->
-                        <div x-data="{ isActive: false, open: false }">
-                            <!-- active & hover classes 'bg-primary-100 dark:bg-primary' -->
-                            <a href="#" @click="$event.preventDefault(); open = !open"
-                                class="flex items-center p-2 text-gray-500 transition-colors rounded-md dark:text-light hover:bg-primary-100 dark:hover:bg-primary"
-                                :class="{ 'bg-primary-100 dark:bg-primary': isActive || open }" role="button"
-                                aria-haspopup="true" :aria-expanded="(open || isActive) ? 'true' : 'false'">
-                                <span aria-hidden="true">
-                                    <svg class="w-5 h-5" xmlns="http://www.w3.org/2000/svg" fill="none"
-                                        viewBox="0 0 24 24" stroke="currentColor">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                            d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
-                                    </svg>
-                                </span>
-                                <span class="ml-2 text-sm"> Authentication </span>
-                                <span aria-hidden="true" class="ml-auto">
-                                    <!-- active class 'rotate-180' -->
-                                    <svg class="w-4 h-4 transition-transform transform" :class="{ 'rotate-180': open }"
-                                        xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                                        stroke="currentColor">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                            d="M19 9l-7 7-7-7" />
-                                    </svg>
-                                </span>
-                            </a>
-
-                            <div x-show="open" class="mt-2 space-y-2 px-7" role="menu" aria-label="Authentication">
-                                @guest
-                                    <!-- Guest Links -->
-                                    @if (Route::has('login'))
-                                        <a href="{{ route('login') }}" role="menuitem"
-                                            class="block p-2 text-sm text-gray-400 transition-colors duration-200 rounded-md dark:hover:text-light hover:text-gray-700">
-                                            Login
-                                        </a>
-                                    @endif
-                                    @if (Route::has('register'))
-                                        <a href="{{ route('register') }}" role="menuitem"
-                                            class="block p-2 text-sm text-gray-400 transition-colors duration-200 rounded-md dark:hover:text-light hover:text-gray-700">
-                                            Register
-                                        </a>
-                                    @endif
-                                @endguest
-
-                                @auth
-                                    <!-- Authenticated Links -->
-                                    <a href="#"
-                                        class="block p-2 text-sm text-gray-400 transition-colors duration-200 rounded-md dark:hover:text-light hover:text-gray-700">
-                                        {{ Auth::user()->name }}
-                                    </a>
-                                    <a href="{{ route('logout') }}" role="menuitem"
-                                        class="block p-2 text-sm text-gray-400 transition-colors duration-200 rounded-md dark:hover:text-light hover:text-gray-700"
-                                        onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-                                        Logout
-                                    </a>
-                                    <form id="logout-form" action="{{ route('logout') }}" method="POST" class="hidden">
-                                        @csrf
-                                    </form>
-                                @endauth
-                            </div>
-                        </div>
-
-                    </nav>
-                    <!-- Sidebar footer -->
-                    <div class="flex-shrink-0 px-2 py-4 space-y-2">
-                        <button @click="openSettingsPanel" type="button"
-                            class="flex items-center justify-center w-full px-4 py-2 text-sm text-white rounded-md bg-primary hover:bg-primary-dark focus:outline-none focus:ring focus:ring-primary-dark focus:ring-offset-1 focus:ring-offset-white dark:focus:ring-offset-dark">
-                            <span aria-hidden="true">
-                                <svg class="w-4 h-4 mr-2" xmlns="http://www.w3.org/2000/svg" fill="none"
-                                    viewBox="0 0 24 24" stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                        d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4" />
-                                </svg>
-                            </span>
-                            <span>Customize</span>
-                        </button>
-                    </div>
-                </div>
-            </aside>
+            <x-sidebar></x-sidebar>
 
             <div class="flex flex-col flex-1 min-h-screen overflow-x-hidden overflow-y-auto">
                 <!-- Navbar -->
@@ -179,7 +55,7 @@
                         <!-- Brand -->
                         <a href="#"
                             class="inline-block text-2xl font-bold tracking-wider uppercase text-primary-dark dark:text-light">
-                            K-WD
+                            {{ $title }}
                         </a>
 
                         <!-- Mobile sub menu button -->
@@ -198,8 +74,7 @@
                         <!-- Desktop Right buttons -->
                         <nav aria-label="Secondary" class="hidden space-x-2 md:flex md:items-center">
                             <!-- Toggle dark theme button -->
-                            <button aria-hidden="true" class="relative focus:outline-none" x-cloak
-                                @click="toggleTheme">
+                            <button aria-hidden="true" class="relative focus:outline-none" x-cloak @click="toggleTheme">
                                 <div
                                     class="w-12 h-6 transition rounded-full outline-none bg-primary-100 dark:bg-primary-lighter">
                                 </div>
@@ -223,7 +98,7 @@
                             </button>
 
                             <!-- Notification button -->
-                            <button @click="openNotificationsPanel"
+                            {{-- <button @click="openNotificationsPanel"
                                 class="p-2 transition-colors duration-200 rounded-full text-primary-lighter bg-primary-50 hover:text-primary hover:bg-primary-100 dark:hover:text-light dark:hover:bg-primary-dark dark:bg-dark focus:outline-none focus:bg-primary-100 dark:focus:bg-primary-dark focus:ring-primary-darker">
                                 <span class="sr-only">Open Notification panel</span>
                                 <svg class="w-7 h-7" xmlns="http://www.w3.org/2000/svg" fill="none"
@@ -231,10 +106,10 @@
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                         d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
                                 </svg>
-                            </button>
+                            </button> --}}
 
                             <!-- Search button -->
-                            <button @click="openSearchPanel"
+                            {{-- <button @click="openSearchPanel"
                                 class="p-2 transition-colors duration-200 rounded-full text-primary-lighter bg-primary-50 hover:text-primary hover:bg-primary-100 dark:hover:text-light dark:hover:bg-primary-dark dark:bg-dark focus:outline-none focus:bg-primary-100 dark:focus:bg-primary-dark focus:ring-primary-darker">
                                 <span class="sr-only">Open search panel</span>
                                 <svg class="w-7 h-7" xmlns="http://www.w3.org/2000/svg" fill="none"
@@ -242,7 +117,7 @@
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                         d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
                                 </svg>
-                            </button>
+                            </button> --}}
 
                             <!-- Settings button -->
                             <button @click="openSettingsPanel"
@@ -331,7 +206,7 @@
                                     </div>
                                 </button>
 
-                                <!-- Notification button -->
+                                {{-- <!-- Notification button -->
                                 <button
                                     @click="openNotificationsPanel(); $nextTick(() => { isMobileSubMenuOpen = false })"
                                     class="p-2 transition-colors duration-200 rounded-full text-primary-lighter bg-primary-50 hover:text-primary hover:bg-primary-100 dark:hover:text-light dark:hover:bg-primary-dark dark:bg-dark focus:outline-none focus:bg-primary-100 dark:focus:bg-primary-dark focus:ring-primary-darker">
@@ -341,10 +216,10 @@
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                             d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
                                     </svg>
-                                </button>
+                                </button> --}}
 
                                 <!-- Search button -->
-                                <button
+                                {{-- <button
                                     @click="openSearchPanel(); $nextTick(() => { $refs.searchInput.focus(); setTimeout(() => {isMobileSubMenuOpen= false}, 100) })"
                                     class="p-2 transition-colors duration-200 rounded-full text-primary-lighter bg-primary-50 hover:text-primary hover:bg-primary-100 dark:hover:text-light dark:hover:bg-primary-dark dark:bg-dark focus:outline-none focus:bg-primary-100 dark:focus:bg-primary-dark focus:ring-primary-darker">
                                     <span class="sr-only">Open search panel</span>
@@ -353,7 +228,7 @@
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                             d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
                                     </svg>
-                                </button>
+                                </button> --}}
 
                                 <!-- Settings button -->
                                 <button @click="openSettingsPanel(); $nextTick(() => { isMobileSubMenuOpen = false })"
@@ -437,7 +312,7 @@
                                     aria-label="Dashboards">
                                     <!-- active & hover classes 'text-gray-700 dark:text-light' -->
                                     <!-- inActive classes 'text-gray-400 dark:text-gray-400' -->
-                                    <a href="../index.html" role="menuitem"
+                                    {{-- <a href="../index.html" role="menuitem"
                                         class="block p-2 text-sm text-gray-400 transition-colors duration-200 rounded-md dark:text-gray-400 dark:hover:text-light hover:text-gray-700">
                                         Default
                                     </a>
@@ -448,7 +323,7 @@
                                     <a href="#" role="menuitem"
                                         class="block p-2 text-sm text-gray-400 transition-colors duration-200 rounded-md dark:hover:text-light hover:text-gray-700">
                                         E-Commerce (soon)
-                                    </a>
+                                    </a> --}}
                                 </div>
                             </div>
                             <!-- Authentication links -->
@@ -664,15 +539,7 @@
                                     }">
                                     Action
                                 </button>
-                                <button @click.prevent="activeTabe = 'user'"
-                                    class="px-px pb-4 transition-all duration-200 transform translate-y-px border-b focus:outline-none"
-                                    :class="{
-                                        'border-primary-dark dark:border-primary': activeTabe ==
-                                            'user',
-                                        'border-transparent': activeTabe != 'user'
-                                    }">
-                                    User
-                                </button>
+
                             </div>
                         </div>
                     </div>
@@ -683,17 +550,11 @@
                         <div class="space-y-4" x-show.transition.in="activeTabe == 'action'">
                             <p class="px-4">Action tab content</p>
                             <!--  -->
+
                             <!-- Action tab content -->
                             <!--  -->
                         </div>
 
-                        <!-- User tab -->
-                        <div class="space-y-4" x-show.transition.in="activeTabe == 'user'">
-                            <p class="px-4">User tab content</p>
-                            <!--  -->
-                            <!-- User tab content -->
-                            <!--  -->
-                        </div>
                     </div>
                 </div>
             </section>
@@ -729,8 +590,8 @@
                 <div class="flex flex-col h-screen">
                     <!-- Panel header (Search input) -->
                     <div
-                        class="relative flex-shrink-0 px-4 py-8 text-gray-400 border-b dark:border-primary-darker dark:focus-within:text-light focus-within:text-gray-700">
-                        <span class="absolute inset-y-0 inline-flex items-center px-4">
+                        class="relative flex-shrink-0 px-4 py-8 text-gray-400 border-b dark:border-primary-darker dark:focus-within:text-light focus-within:text-gray-700">                        
+                            <span class="absolute inset-y-0 inline-flex items-center px-4">
                             <svg class="w-5 h-5" xmlns="http://www.w3.org/2000/svg" fill="none"
                                 viewBox="0 0 24 24" stroke="currentColor">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -745,10 +606,10 @@
                     <!-- Panel content (Search result) -->
                     <div class="flex-1 px-4 pb-4 space-y-4 overflow-y-hidden h hover:overflow-y-auto">
                         <h3 class="py-2 text-sm font-semibold text-gray-600 dark:text-light">History</h3>
-                        <p class="px=4">Search resault</p>
-                        <!--  -->
-                        <!-- Search content -->
-                        <!--  -->
+                        <p class="px=4">Search resault
+                            <!--  -->
+                            <!-- Search content -->
+                        </p>
                     </div>
                 </div>
             </section>

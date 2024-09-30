@@ -95,13 +95,25 @@ class Dosen extends Controller
         if ($mahasiswa->wali_kelas_id != Auth::user()->id) {
             return redirect()->route('dosen.dashboard')->with('error', 'Anda bukan wali kelas dari mahasiswa ini');
         }
-        // Set field edit jadi true
         $mahasiswa->edit = true;
         $mahasiswa->save();
 
-        // Hapus request setelah di-approve
         $request->delete();
 
         return redirect()->route('dosen.dashboard')->with('success', 'Request edit disetujui.');
+    }
+    public function rejectRequest($id)
+    {
+        $request = RequestMahasiswa::find($id);
+        if (!$request) {
+            return redirect()->route('dosen.dashboard')->with('error', 'Request tidak ditemukan.');
+        }
+        $mahasiswa = Mahasiswa::find($request->mahasiswa_id);
+        if ($mahasiswa->wali_kelas_id != Auth::user()->id) {
+            return redirect()->route('dosen.dashboard')->with('error', 'Anda bukan wali kelas dari mahasiswa ini');
+        }
+        $request->delete();
+
+        return redirect()->route('dosen.dashboard')->with('success', 'Request edit ditolak.');
     }
 }
