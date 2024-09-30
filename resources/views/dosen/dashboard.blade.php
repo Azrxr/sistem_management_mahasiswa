@@ -3,7 +3,11 @@
         <div class="-mt-20 mx-10">
             <div class="flex items-center justify-between  py-4 border-b lg:py-6 dark:border-primary-darker">
                 <h1 class="text-2xl font-semibold">Dashboard Dosen</h1>
-                
+                <div class="p-4">
+                    <h2 class="text-lg font-semibold">Selamat datang, {{ $user->username }}</h2>
+                    
+                   
+                </div>
             </div>
         @if(session('success'))
             <div class="bg-green-500 text-white p-2 rounded">
