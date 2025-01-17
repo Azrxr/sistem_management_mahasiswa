@@ -17,7 +17,7 @@ Aplikasi ini bertujuan untuk mempermudah pendataan data mahasiswa dengan fitur-f
 4. **Fitur Mahasiswa**: Mahasiswa hanya dapat melihat datanya sendiri dan dapat mengajukan permintaan edit data kepada dosen wali jika terjadi kesalahan pendataan. Hak akses akan hilang setelah selesai mengedit.
 5. **Batas Kapasitas Kelas**: Isi kelas tidak boleh melebihi kapasitas yang ditentukan.
 6. **Data Dummy**: Sistem diisi dengan data dummy yang terdiri dari 1 kaprodi, 5 dosen, dan 20 mahasiswa per kelas (10 mahasiswa per kelas), dengan 2 dosen wali dan 3 dosen biasa yang tidak memiliki akses ke data 1 kelas.
-7. **Teknologi yang Digunakan**: Menggunakan Tailwind dan Laravel 10, bukan Laravel 11, meskipun referensi menggunakan Bootstrap.
+7. **Teknologi yang Digunakan**: Menggunakan Tailwind dan Laravel 11,
 [Schema Database](https://dbdiagram.io/d/Data-Mahasiswa-66a99f438b4bb5230eccaaef)
 
 ## Cara Penggunaan Aplikasi
